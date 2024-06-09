@@ -22,6 +22,7 @@ return [
     ],
     'output' => [
         'type' => OutputType::Console,
-        'file_path' => 'output/results.txt', // Used only for 'txt' and 'xml'
+        'file_path' => 'output/', // Used only for 'txt' and 'xml'
+        'file_name' => 'results.txt', // Used only for 'txt' and 'xml'
     ],
 ];
