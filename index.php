@@ -50,6 +50,7 @@ try {
 
 
 
+
 } catch (\Exception $e) {
     echo 'Failed to calculate commissions: ';
     echo $e->getMessage();
