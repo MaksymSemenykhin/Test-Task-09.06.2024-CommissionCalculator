@@ -5,3 +5,4 @@ bin/
 .idea/
 config.local.php
 .php-cs-fixer.cache
+output/
