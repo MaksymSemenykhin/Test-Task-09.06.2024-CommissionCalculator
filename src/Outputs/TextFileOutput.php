@@ -2,21 +2,10 @@
 
 namespace CommissionCalculator\Outputs;
 
-use CommissionCalculator\Contracts\OutputInterface;
+use CommissionCalculator\Contracts\FileOutputAbstract;
 
-class TextFileOutput implements OutputInterface
+readonly class TextFileOutput extends FileOutputAbstract
 {
-    private $filePath;
-
-    /**
-     * TextFileOutput constructor.
-     *
-     * @param string $filePath Path to the output file.
-     */
-    public function __construct(string $filePath)
-    {
-        $this->filePath = $filePath;
-    }
 
     /**
      * Outputs the results to a text file.
@@ -26,6 +15,7 @@ class TextFileOutput implements OutputInterface
      */
     public function output(array $results): void
     {
-        file_put_contents($this->filePath, implode(PHP_EOL, $results) . PHP_EOL);
+        $this->directoryCheck();
+        file_put_contents($this->GetFullPath() , implode(PHP_EOL, $results) . PHP_EOL);
     }
 }

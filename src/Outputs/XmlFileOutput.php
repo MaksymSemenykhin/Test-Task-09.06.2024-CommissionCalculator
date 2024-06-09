@@ -2,21 +2,10 @@
 
 namespace CommissionCalculator\Outputs;
 
-use CommissionCalculator\Contracts\OutputInterface;
+use CommissionCalculator\Contracts\FileOutputAbstract;
 
-class XmlFileOutput implements OutputInterface
+readonly class XmlFileOutput extends FileOutputAbstract
 {
-    private $filePath;
-
-    /**
-     * XmlFileOutput constructor.
-     *
-     * @param string $filePath Path to the output file.
-     */
-    public function __construct(string $filePath)
-    {
-        $this->filePath = $filePath;
-    }
 
     /**
      * Outputs the results to an XML file.
@@ -30,6 +19,8 @@ class XmlFileOutput implements OutputInterface
         foreach ($results as $result) {
             $xml->addChild('result', $result);
         }
-        $xml->asXML($this->filePath);
+
+        $this->directoryCheck();
+        $xml->asXML($this->GetFullPath());
     }
 }
