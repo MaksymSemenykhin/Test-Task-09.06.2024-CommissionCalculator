@@ -6,7 +6,6 @@ use CommissionCalculator\Contracts\FileOutputAbstract;
 
 readonly class XmlFileOutput extends FileOutputAbstract
 {
-
     /**
      * Outputs the results to an XML file.
      *
@@ -21,6 +20,6 @@ readonly class XmlFileOutput extends FileOutputAbstract
         }
 
         $this->directoryCheck();
-        $xml->asXML($this->GetFullPath());
+        $xml->asXML($this->getFullPath());
     }
 }

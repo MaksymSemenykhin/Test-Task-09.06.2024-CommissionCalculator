@@ -21,9 +21,9 @@ readonly abstract class FileOutputAbstract implements OutputInterface
     {
         throw new \Exception('function output not implemented in FileOutputAbstract');
     }
-    protected function GetFullPath(): string
+    protected function getFullPath(): string
     {
-        return trim($this->filePath,'/').DIRECTORY_SEPARATOR . $this->fileName;
+        return trim($this->filePath, '/') . DIRECTORY_SEPARATOR . $this->fileName;
     }
     protected function directoryCheck(): void
     {

@@ -29,8 +29,8 @@ class OutputFactory
             throw new Exception('Output file path not specified');
         }
         return match ($config['type']) {
-            OutputType::Txt => new TextFileOutput($config['file_path'],$config['file_name']),
-            OutputType::Xml => new XmlFileOutput($config['file_path'],$config['file_name']),
+            OutputType::Txt => new TextFileOutput($config['file_path'], $config['file_name']),
+            OutputType::Xml => new XmlFileOutput($config['file_path'], $config['file_name']),
             OutputType::Console => new ConsoleOutput(),
         };
     }
