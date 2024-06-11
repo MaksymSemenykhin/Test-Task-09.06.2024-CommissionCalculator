@@ -1,3 +1,4 @@
+[![CI/CD Pipeline](https://github.com/MaksymSemenykhin/Test-Task-09.06.2024-CommissionCalculator/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/MaksymSemenykhin/Test-Task-09.06.2024-CommissionCalculator/actions/workflows/ci.yml)
 
 ## Описание
 
