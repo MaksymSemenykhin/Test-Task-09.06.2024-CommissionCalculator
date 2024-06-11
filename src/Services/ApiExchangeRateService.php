@@ -2,12 +2,10 @@
 
 namespace CommissionCalculator\Services;
 
-use CommissionCalculator\Contracts\ExchangeRateServiceAbstract;
+use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Enums\SupportedCurrencies;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use mysql_xdevapi\Exception;
-use PhpParser\Node\Expr\Throw_;
 
 /**
  * The ApiExchangeRateService is responsible for fetching exchange rates from an API.

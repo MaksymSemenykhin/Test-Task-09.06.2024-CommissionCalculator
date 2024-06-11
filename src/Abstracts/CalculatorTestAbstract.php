@@ -1,9 +1,9 @@
 <?php
 
-namespace CommissionCalculator\Contracts;
+namespace CommissionCalculator\Abstracts;
 
-use CommissionCalculator\Factories\EnvironmentFactory;
 use CommissionCalculator\Enums\KnownConfigs;
+use CommissionCalculator\Factories\EnvironmentFactory;
 use CommissionCalculator\Services\CommissionCalculator;
 use CommissionCalculator\Services\CommissionCalculatorTests;
 use PHPUnit\Framework;

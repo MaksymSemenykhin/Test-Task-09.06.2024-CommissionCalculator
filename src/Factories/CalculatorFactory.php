@@ -2,13 +2,12 @@
 
 namespace CommissionCalculator\Factories;
 
-use CommissionCalculator\Contracts\CommissionStrategyAbstract;
-use CommissionCalculator\Contracts\ExchangeRateServiceAbstract;
+use CommissionCalculator\Abstracts\CommissionStrategyAbstract;
+use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Contracts\WithdrawalsRepositoryInterface;
-use CommissionCalculator\Repositories\WithdrawalsRepository;
-use CommissionCalculator\Strategies\PrivateClientWithdrawStrategy;
 use CommissionCalculator\Strategies\BusinessClientWithdrawStrategy;
 use CommissionCalculator\Strategies\DepositStrategy;
+use CommissionCalculator\Strategies\PrivateClientWithdrawStrategy;
 
 class CalculatorFactory
 {

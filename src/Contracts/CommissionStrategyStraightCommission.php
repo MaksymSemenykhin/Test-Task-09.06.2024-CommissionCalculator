@@ -2,6 +2,7 @@
 
 namespace CommissionCalculator\Contracts;
 
+use CommissionCalculator\Abstracts\CommissionStrategyAbstract;
 use CommissionCalculator\Models\Transaction;
 
 class CommissionStrategyStraightCommission extends CommissionStrategyAbstract

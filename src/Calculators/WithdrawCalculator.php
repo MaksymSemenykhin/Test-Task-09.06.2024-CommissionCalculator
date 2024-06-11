@@ -2,8 +2,8 @@
 
 namespace CommissionCalculator\Calculators;
 
+use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Contracts\CommissionCalculatorInterface;
-use CommissionCalculator\Contracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Models\Transaction;
 
 class WithdrawCalculator implements CommissionCalculatorInterface

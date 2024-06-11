@@ -2,7 +2,7 @@
 
 namespace CommissionCalculator\Services;
 
-use CommissionCalculator\Contracts\CommissionCalculatorAbstract;
+use CommissionCalculator\Abstracts\CommissionCalculatorAbstract;
 use CommissionCalculator\Factories\ServiceFactory;
 use CommissionCalculator\Models\Transaction;
 

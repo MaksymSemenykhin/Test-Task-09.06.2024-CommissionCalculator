@@ -2,7 +2,7 @@
 
 namespace CommissionCalculator\Outputs;
 
-use CommissionCalculator\Contracts\FileOutputAbstract;
+use CommissionCalculator\Abstracts\FileOutputAbstract;
 
 readonly class TextFileOutput extends FileOutputAbstract
 {

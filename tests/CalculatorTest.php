@@ -1,6 +1,6 @@
 <?php
 
-use CommissionCalculator\Contracts\CalculatorTestAbstract;
+use CommissionCalculator\Abstracts\CalculatorTestAbstract;
 
 class CalculatorTest extends CalculatorTestAbstract
 {

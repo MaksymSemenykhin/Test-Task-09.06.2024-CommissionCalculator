@@ -2,9 +2,8 @@
 
 namespace CommissionCalculator\Services;
 
-use CommissionCalculator\Contracts\CommissionCalculatorAbstract;
+use CommissionCalculator\Abstracts\CommissionCalculatorAbstract;
 use CommissionCalculator\Factories\ServiceFactory;
-
 use function PHPUnit\Framework\assertEquals;
 
 class CommissionCalculatorTests extends CommissionCalculatorAbstract

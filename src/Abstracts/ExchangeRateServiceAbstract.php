@@ -1,6 +1,6 @@
 <?php
 
-namespace CommissionCalculator\Contracts;
+namespace CommissionCalculator\Abstracts;
 
 use CommissionCalculator\Enums\SupportedCurrencies;
 

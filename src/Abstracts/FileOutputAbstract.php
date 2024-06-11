@@ -1,6 +1,8 @@
 <?php
 
-namespace CommissionCalculator\Contracts;
+namespace CommissionCalculator\Abstracts;
+
+use CommissionCalculator\Contracts\OutputInterface;
 
 readonly abstract class FileOutputAbstract implements OutputInterface
 {

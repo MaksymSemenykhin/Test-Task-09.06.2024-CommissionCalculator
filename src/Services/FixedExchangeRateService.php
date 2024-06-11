@@ -2,7 +2,7 @@
 
 namespace CommissionCalculator\Services;
 
-use CommissionCalculator\Contracts\ExchangeRateServiceAbstract;
+use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Enums\SupportedCurrencies;
 
 /**

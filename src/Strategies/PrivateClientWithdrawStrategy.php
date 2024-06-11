@@ -2,8 +2,8 @@
 
 namespace CommissionCalculator\Strategies;
 
-use CommissionCalculator\Contracts\CommissionStrategyAbstract;
-use CommissionCalculator\Contracts\ExchangeRateServiceAbstract;
+use CommissionCalculator\Abstracts\CommissionStrategyAbstract;
+use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Contracts\WithdrawalsRepositoryInterface;
 use CommissionCalculator\Models\Transaction;
 

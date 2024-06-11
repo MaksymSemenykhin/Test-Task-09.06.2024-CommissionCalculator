@@ -48,9 +48,6 @@ try {
     $outputHandler = $outputFactory->createOutputHandler($config['output']);
     $outputHandler->output($results);
 
-
-
-
 } catch (\Exception $e) {
     echo 'Failed to calculate commissions: ';
     echo $e->getMessage();
