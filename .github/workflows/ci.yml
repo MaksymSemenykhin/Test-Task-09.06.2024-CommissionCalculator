@@ -42,4 +42,16 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit tests
+
+      - name: Run PHP CS
+        run: vendor/bin/phpcs --standard=PSR12 src
+#
+#      - name: Replace OutputType
+#        run: sed -i "s/'type' => OutputType::[a-zA-Z]*/'type' => ${{ matrix.OutputType }}/" config/config.php
+#
+#      - name: Run app
+#        run:  API_KEY=${{ secrets.API_KEY }} php index.php
+
 
