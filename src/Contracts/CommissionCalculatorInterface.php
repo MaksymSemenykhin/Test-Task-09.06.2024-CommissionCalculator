@@ -6,5 +6,5 @@ use CommissionCalculator\Models\Transaction;
 
 interface CommissionCalculatorInterface
 {
-    public function calculate(Transaction $operation): float;
+    public function calculate(Transaction $transaction): float;
 }
