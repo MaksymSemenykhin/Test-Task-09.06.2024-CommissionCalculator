@@ -8,6 +8,10 @@ use CommissionCalculator\Services\CommissionCalculator;
 use CommissionCalculator\Services\CommissionCalculatorTests;
 use PHPUnit\Framework;
 
+/**
+ * CalculatorTestAbstract is a base for CalculatorTest implementations, which are used to test the application.
+ * It is Required to contain common tests functions
+ */
 class CalculatorTestAbstract extends Framework\TestCase
 {
     protected CommissionCalculator|CommissionCalculatorTests $testRunner;
