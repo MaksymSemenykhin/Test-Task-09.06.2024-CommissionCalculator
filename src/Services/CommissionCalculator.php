@@ -31,12 +31,10 @@ class CommissionCalculator extends CommissionCalculatorAbstract
         $transactionRepository = $this->serviceFactory->createTransactionRepository($sourcePath);
 
         $transactions = $transactionRepository->getAllTransactions();
-        $result = array_reduce($transactions, function ($carry, Transaction $transaction) use ($calculatorFactory) {
+        return array_reduce($transactions, function ($carry, Transaction $transaction) use ($calculatorFactory) {
             $strategy = $calculatorFactory->create($transaction->transactionType, $transaction->userType);
             $carry[] = $strategy->calculate($transaction);
             return $carry;
         }, []);
-
-        return $result;
     }
 }

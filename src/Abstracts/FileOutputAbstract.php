@@ -26,7 +26,7 @@ readonly abstract class FileOutputAbstract implements OutputInterface
     /**
      * @throws Exception
      */
-    public function output(array $results): void
+    public function output(array $results): ?array
     {
         throw new Exception('function output not implemented in FileOutputAbstract');
     }
@@ -48,6 +48,6 @@ readonly abstract class FileOutputAbstract implements OutputInterface
      */
     protected function directoryCheck(): void
     {
-        is_dir($this->filePath) || @mkdir($this->filePath) || die("Can't Create folder from path: {$this->filePath}");
+        is_dir($this->filePath) || mkdir($this->filePath) || die("Can't Create folder from path: {$this->filePath}");
     }
 }

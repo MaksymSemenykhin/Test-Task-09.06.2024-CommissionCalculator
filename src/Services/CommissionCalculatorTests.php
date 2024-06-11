@@ -3,6 +3,8 @@
 namespace CommissionCalculator\Services;
 
 use CommissionCalculator\Abstracts\CommissionCalculatorAbstract;
+use CommissionCalculator\Enums\OutputType;
+use CommissionCalculator\Factories\OutputFactory;
 use CommissionCalculator\Factories\ServiceFactory;
 
 use function PHPUnit\Framework\assertEquals;
@@ -32,6 +34,11 @@ class CommissionCalculatorTests extends CommissionCalculatorAbstract
     public function runTest(string $sourcePath, array $expectedResults): void
     {
         $results = $this->commissionCalculator->calculateCommissions($sourcePath);
+
+        $outputFactory = new OutputFactory();
+        $outputHandler = $outputFactory->createOutputHandler(['type' => OutputType::Array]);
+        $results = $outputHandler->output($results);
+
         assertEquals($expectedResults, $results, sprintf(
             "Test failed for %s\nExpected: %s\nGot: %s\n",
             $sourcePath,

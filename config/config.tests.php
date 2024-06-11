@@ -1,6 +1,7 @@
 <?php
 
 use CommissionCalculator\Enums\EnvironmentType;
+use CommissionCalculator\Enums\OutputType;
 use CommissionCalculator\Enums\SupportedCurrencies;
 use CommissionCalculator\Repositories\TransactionRepository;
 use CommissionCalculator\Repositories\WithdrawalsRepository;
@@ -22,5 +23,9 @@ return [
         ],
         'base_currency' => SupportedCurrencies::EUR,
         'use_fixed' => true, // Toggle between fixed rates and API
-    ]
+    ],
+    'output' => [
+        'type' => OutputType::Array,
+    ],
+
 ];

@@ -6,7 +6,7 @@ use CommissionCalculator\Contracts\DataSourceAdapterInterface;
 
 class CsvDataSourceAdapter implements DataSourceAdapterInterface
 {
-    private $filePath;
+    private string $filePath;
 
     /**
      * CsvDataSourceAdapter constructor.
@@ -28,14 +28,7 @@ class CsvDataSourceAdapter implements DataSourceAdapterInterface
         $rows = array_map('str_getcsv', file($this->filePath));
         return array_map(function ($row) {
             if ($row && count($row) == 6) {
-                return [
-                    'date' => $row[0],
-                    'userId' => $row[1],
-                    'userType' => $row[2],
-                    'transactionType' => $row[3],
-                    'amount' => $row[4],
-                    'currency' => $row[5],
-                ];
+                return array_combine(['date', 'userId', 'userType', 'transactionType', 'amount', 'currency'], $row);
             }
         }, $rows);
     }
