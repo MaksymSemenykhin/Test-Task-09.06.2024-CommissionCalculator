@@ -51,7 +51,7 @@ jobs:
       - name: Replace OutputType
         run: sed -i "s/'type' => OutputType::[a-zA-Z]*/'type' => ${{ matrix.OutputType }}/" config/config.php
 
-#      - name: Run app
-#        run:  API_KEY=${{ secrets.API_KEY }} php index.php
+      - name: Run app
+        run:  API_KEY=${{ secrets.API_KEY }} php index.php
 
 
