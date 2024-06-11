@@ -3,11 +3,13 @@
 namespace CommissionCalculator\Factories;
 
 use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
+use CommissionCalculator\Contracts\ValidatorInterface;
 use CommissionCalculator\Contracts\WithdrawalsRepositoryInterface;
 use CommissionCalculator\Enums\SupportedCurrencies;
 use CommissionCalculator\Repositories\TransactionRepository;
 use CommissionCalculator\Services\ApiExchangeRateService;
 use CommissionCalculator\Services\FixedExchangeRateService;
+use CommissionCalculator\Validators\TransactionValidator;
 
 /**
  * ServiceFactory is a class that responsible for creating and configuring various services used by the application.
@@ -55,6 +57,11 @@ class ServiceFactory
             );
         }
     }
+    /**
+     * Creates and returns a new instance of the WithdrawalsRepositoryInterface class based on the configuration.
+     *
+     * @return WithdrawalsRepositoryInterface The newly created instance of the WithdrawalsRepositoryInterface class.
+     */
     public function createWithdrawalsRepository(): WithdrawalsRepositoryInterface
     {
         return new $this->config['WithdrawalsRepository']();
@@ -67,7 +74,9 @@ class ServiceFactory
      */
     public function createTransactionRepository(string $sourcePath): TransactionRepository
     {
-        return new $this->config['TransactionRepository']($sourcePath);
+        $dataSourceAdapter = (new DataSourceAdapterFactory())->create($sourcePath);
+        $validator = $this->createTransactionValidator();
+        return new $this->config['TransactionRepository']($dataSourceAdapter,$validator);
     }
 
     /**
@@ -80,5 +89,15 @@ class ServiceFactory
         $exchangeRateService = $this->createExchangeRateService();
         $withdrawalsRepository = $this->createWithdrawalsRepository();
         return new CalculatorFactory($exchangeRateService, $withdrawalsRepository);
+    }
+
+    /**
+     * Creates and returns a new instance of the TransactionValidator class, which implements the ValidatorInterface.
+     *
+     * @return ValidatorInterface The newly created TransactionValidator instance.
+     */
+    private function createTransactionValidator(): ValidatorInterface
+    {
+        return new TransactionValidator();
     }
 }

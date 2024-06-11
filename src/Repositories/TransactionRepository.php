@@ -3,41 +3,55 @@
 namespace CommissionCalculator\Repositories;
 
 use CommissionCalculator\Contracts\DataSourceAdapterInterface;
+use CommissionCalculator\Contracts\ValidatorInterface;
 use CommissionCalculator\Enums\SupportedCurrencies;
-use CommissionCalculator\Factories\DataSourceAdapterFactory;
 use CommissionCalculator\Models\Transaction;
 
-class TransactionRepository
+/**
+ * TransactionRepository is a class that is responsible for fetching and validating transactions from a data source.
+ * It has two dependencies: DataSourceAdapterInterface and ValidatorInterface.
+ */
+readonly class TransactionRepository
 {
-    private $dataSourceAdapter;
-
     /**
      * TransactionRepository constructor.
      *
-     * @param string $sourcePath Path to the data source.
+     * @param DataSourceAdapterInterface $dataSourceAdapter
+     * @param ValidatorInterface $validator
      */
-    public function __construct(string $sourcePath)
-    {
-        $this->dataSourceAdapter = (new DataSourceAdapterFactory())->create($sourcePath);
+    public function __construct(
+        private DataSourceAdapterInterface $dataSourceAdapter,
+        private ValidatorInterface $validator
+    ) {
     }
 
     /**
-     * Gets all transactions from the data source and converts them to Transaction objects.
+     * Gets all transactions from the data source and converts them to Transaction objects after validation
      *
      * @return Transaction[]
      */
     public function getAllTransactions(): array
     {
-        return array_map(function ($data) {
-            return new Transaction(
+        $rawData = $this->dataSourceAdapter->fetchTransactions();
+        $transactions = [];
+
+        foreach ($rawData as $data) {
+            $errors = $this->validator->validate($data);
+            if (!empty($errors)) {
+                throw new \InvalidArgumentException("Invalid transaction data: " . implode(', ', $errors));
+            }
+
+            $transactions[] = new Transaction(
                 $data['date'],
-                $data['userId'],
+                (int)$data['userId'],
                 $data['userType'],
                 $data['transactionType'],
-                (float) $data['amount'],
+                (float)$data['amount'],
                 SupportedCurrencies::tryFrom($data['currency']),
-                0.0
+                0.0,
             );
-        }, $this->dataSourceAdapter->fetchTransactions());
+        }
+
+        return $transactions;
     }
 }
