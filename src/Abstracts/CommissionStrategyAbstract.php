@@ -35,7 +35,8 @@ abstract class CommissionStrategyAbstract
     private function roundUp(float $amount, SupportedCurrencies $currency): float|int
     {
         $decimalPlaces = $this->getDecimalPlaces($currency);
-        return ceil($amount * pow(10, $decimalPlaces)) / pow(10, $decimalPlaces);
+        $result = ceil($amount * pow(10, $decimalPlaces)) / pow(10, $decimalPlaces);
+        return $decimalPlaces === 0 ? (int) $result : $result;
     }
 
     /**
@@ -55,15 +56,14 @@ abstract class CommissionStrategyAbstract
      * Calculates the commission for a given transaction.
      *
      * @param Transaction $tr The transaction object.
-     * @return float The calculated commission.
+     * @return float|int The calculated commission.
      */
-    public function calculate(Transaction $tr): float
+    public function calculate(Transaction $tr):  float|int
     {
         $exchangeRateService = $this->exchangeRateService;
         $tr->amountInEUR = $exchangeRateService->convertToBase($tr->amount, $tr->currency);
 
         $chargeableAmount = $this->calculateChargeableAmount($tr);
-
         return $this->roundUp($exchangeRateService->convertFromBase($chargeableAmount, $tr->currency), $tr->currency);
     }
 }
