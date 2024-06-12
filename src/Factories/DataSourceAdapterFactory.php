@@ -4,6 +4,7 @@ namespace CommissionCalculator\Factories;
 
 use CommissionCalculator\Contracts\DataSourceAdapterInterface;
 use CommissionCalculator\Adapters\CsvDataSourceAdapter;
+use CommissionCalculator\Models\Transaction;
 
 class DataSourceAdapterFactory
 {
@@ -18,12 +19,9 @@ class DataSourceAdapterFactory
     {
         $extension = pathinfo($sourcePath, PATHINFO_EXTENSION);
 
-        switch ($extension) {
-            case 'csv':
-                return new CsvDataSourceAdapter($sourcePath);
-                // You can add more cases here for different types of data sources.
-            default:
-                throw new \InvalidArgumentException("Unsupported data source type: $extension");
-        }
+        return match ($extension) {
+            'csv' => new CsvDataSourceAdapter($sourcePath, Transaction::$fieldsList),
+            default => throw new \InvalidArgumentException("Unsupported data source type: $extension"),
+        };
     }
 }
