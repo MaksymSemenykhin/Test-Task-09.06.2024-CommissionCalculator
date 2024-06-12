@@ -2,6 +2,10 @@
 
 namespace CommissionCalculator\Contracts;
 
+/**
+ * interface for subsequent implementations of transaction data sources using inheritance
+ * @package CommissionCalculator\Contracts
+ */
 interface DataSourceAdapterInterface
 {
     /**

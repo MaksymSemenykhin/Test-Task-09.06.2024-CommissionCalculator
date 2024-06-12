@@ -4,6 +4,10 @@ namespace CommissionCalculator\Contracts;
 
 use CommissionCalculator\Enums\SupportedCurrencies;
 
+/**
+ * interface for subsequent implementations of Output services using inheritance
+ * @package CommissionCalculator\Contracts
+ */
 interface OutputInterface
 {
     /**

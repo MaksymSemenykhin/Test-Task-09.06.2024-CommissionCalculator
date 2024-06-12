@@ -3,7 +3,8 @@
 namespace CommissionCalculator\Contracts;
 
 /**
-ValidatorInterface is interface for subsequent implementations of validation by different classes using inheritance
+ * ValidatorInterface is interface for subsequent implementations of validation by different classes using inheritance
+ * @package CommissionCalculator\Contracts
  */
 interface ValidatorInterface
 {

@@ -29,10 +29,10 @@ abstract class CommissionStrategyAbstract
     }
 
     /**
-     * Calculates the commission for a given transaction.
+     * Calculates the chargeable amount for a given amount in base currency.
      *
      * @param Transaction $transaction
-     * @return float The calculated commission.
+     * @return float The chargeable amount.
      */
     abstract protected function calculateChargeableAmount(Transaction $transaction): float;
 

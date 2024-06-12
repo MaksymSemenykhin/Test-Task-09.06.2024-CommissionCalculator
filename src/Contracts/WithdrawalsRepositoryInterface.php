@@ -3,7 +3,11 @@
 namespace CommissionCalculator\Contracts;
 
 use DateTime;
-
+/**
+ * WithdrawalsRepositoryInterface is interface for different WithdrawalsRepository classes using inheritance
+ * provides methods to work with withdrawals data and is using different sources
+ * @package CommissionCalculator\Contracts
+ */
 interface WithdrawalsRepositoryInterface
 {
     /**
