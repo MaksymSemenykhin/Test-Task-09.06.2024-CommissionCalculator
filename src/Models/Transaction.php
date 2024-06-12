@@ -6,6 +6,8 @@ use CommissionCalculator\Enums\SupportedCurrencies;
 
 class Transaction
 {
+    public static array $fieldsList = ['date', 'userId', 'userType', 'transactionType', 'amount', 'currency'];
+
     public function __construct(
         public readonly string $date,
         public readonly int $userId,
