@@ -5,8 +5,8 @@ namespace CommissionCalculator\Factories;
 use CommissionCalculator\Abstracts\CommissionStrategyAbstract;
 use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
 use CommissionCalculator\Contracts\WithdrawalsRepositoryInterface;
-use CommissionCalculator\Enums\ClientsTypes;
-use CommissionCalculator\Enums\SupportedOperations;
+use CommissionCalculator\Enums\ClientsTypes as C_T;
+use CommissionCalculator\Enums\SupportedOperations as S_O;
 use CommissionCalculator\Strategies\BusinessClientWithdrawStrategy;
 use CommissionCalculator\Strategies\DepositStrategy;
 use CommissionCalculator\Strategies\PrivateClientWithdrawStrategy;
@@ -27,21 +27,20 @@ class CalculatorFactory
     /**
      * Creates the appropriate commission strategy based on transaction type.
      *
-     * @param SupportedOperations $transactionType The transaction type.
-     * @param ClientsTypes $userType The user type.
+     * @param S_O $transactionType The transaction type.
+     * @param C_T $userType The user type.
      * @return CommissionStrategyAbstract
      */
-    public function create(SupportedOperations $transactionType, ClientsTypes $userType): CommissionStrategyAbstract
+    public function create(S_O $transactionType, C_T $userType): CommissionStrategyAbstract
     {
         return match ([$transactionType, $userType]) {
-            [SupportedOperations::DEPOSIT,ClientsTypes::PRIVATE],
-            [SupportedOperations::DEPOSIT, ClientsTypes::BUSINESS] => new DepositStrategy($this->exchangeRateService),
-            [SupportedOperations::WITHDRAW, ClientsTypes::PRIVATE] => new PrivateClientWithdrawStrategy(
+            [S_O::DEPOSIT, C_T::PRIVATE],
+            [S_O::DEPOSIT, C_T::BUSINESS] => new DepositStrategy($this->exchangeRateService),
+            [S_O::WITHDRAW, C_T::PRIVATE] => new PrivateClientWithdrawStrategy(
                 $this->exchangeRateService,
                 $this->withdrawalsRepository
             ),
-            [SupportedOperations::WITHDRAW,
-                ClientsTypes::BUSINESS] => new BusinessClientWithdrawStrategy($this->exchangeRateService),
+            [S_O::WITHDRAW, C_T::BUSINESS] => new BusinessClientWithdrawStrategy($this->exchangeRateService),
             default => throw new \InvalidArgumentException(
                 "Unsupported transaction or user type: $transactionType->value, $userType->value"
             ),
