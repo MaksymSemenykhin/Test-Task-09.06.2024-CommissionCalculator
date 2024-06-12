@@ -3,7 +3,9 @@
 namespace CommissionCalculator\Validators;
 
 use CommissionCalculator\Contracts\ValidatorInterface;
+use CommissionCalculator\Enums\ClientsTypes;
 use CommissionCalculator\Enums\SupportedCurrencies;
+use CommissionCalculator\Enums\SupportedOperations;
 
 /**
 TransactionValidator is a class for validating transaction data. It has a single method called validate,
@@ -33,12 +35,15 @@ class TransactionValidator implements ValidatorInterface
         }
 
         // Validate userType
-        if (empty($data['userType']) || !in_array($data['userType'], ['private', 'business'], true)) {
+        if (empty($data['userType']) || !in_array($data['userType'], ClientsTypes::casesString(), true)) {
             $errors[] = 'Invalid user type.';
         }
 
         // Validate transactionType
-        if (empty($data['transactionType']) || !in_array($data['transactionType'], ['deposit', 'withdraw'], true)) {
+        if (
+            empty($data['transactionType']) ||
+            !in_array($data['transactionType'], SupportedOperations::casesString(), true)
+        ) {
             $errors[] = 'Invalid transaction type.';
         }
 

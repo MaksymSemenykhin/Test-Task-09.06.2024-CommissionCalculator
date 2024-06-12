@@ -4,7 +4,9 @@ namespace CommissionCalculator\Repositories;
 
 use CommissionCalculator\Contracts\DataSourceAdapterInterface;
 use CommissionCalculator\Contracts\ValidatorInterface;
+use CommissionCalculator\Enums\ClientsTypes;
 use CommissionCalculator\Enums\SupportedCurrencies;
+use CommissionCalculator\Enums\SupportedOperations;
 use CommissionCalculator\Models\Transaction;
 
 /**
@@ -44,10 +46,10 @@ readonly class TransactionRepository
             $transactions[] = new Transaction(
                 $data['date'],
                 (int)$data['userId'],
-                $data['userType'],
-                $data['transactionType'],
+                ClientsTypes::from($data['userType']),
+                SupportedOperations::from($data['transactionType']),
                 (float)$data['amount'],
-                SupportedCurrencies::tryFrom($data['currency']),
+                SupportedCurrencies::from($data['currency']),
                 0.0,
             );
         }

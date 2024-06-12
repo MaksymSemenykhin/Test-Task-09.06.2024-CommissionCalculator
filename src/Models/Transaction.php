@@ -2,7 +2,9 @@
 
 namespace CommissionCalculator\Models;
 
+use CommissionCalculator\Enums\ClientsTypes;
 use CommissionCalculator\Enums\SupportedCurrencies;
+use CommissionCalculator\Enums\SupportedOperations;
 
 class Transaction
 {
@@ -11,8 +13,8 @@ class Transaction
     public function __construct(
         public readonly string $date,
         public readonly int $userId,
-        public readonly string $userType,
-        public readonly string $transactionType,
+        public readonly ClientsTypes $userType,
+        public readonly SupportedOperations $transactionType,
         public readonly float $amount,
         public readonly SupportedCurrencies $currency,
         public float $amountInEUR,
