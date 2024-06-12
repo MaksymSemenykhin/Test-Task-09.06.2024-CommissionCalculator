@@ -43,7 +43,7 @@ class CalculatorFactory
             [SupportedOperations::WITHDRAW,
                 ClientsTypes::BUSINESS] => new BusinessClientWithdrawStrategy($this->exchangeRateService),
             default => throw new \InvalidArgumentException(
-                "Unsupported transaction or user type: $transactionType->value, $userType"
+                "Unsupported transaction or user type: $transactionType->value, $userType->value"
             ),
         };
     }
