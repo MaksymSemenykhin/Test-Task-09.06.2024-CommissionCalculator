@@ -7,8 +7,9 @@ use CommissionCalculator\Factories\ServiceFactory;
 /**
  * CommissionCalculatorAbstract is a base for CalculatorTest and CommissionCalculator implementations
  * which are main apps classes
+ *
+ * @package CommissionCalculator\Abstracts
  */
-
 abstract class CommissionCalculatorAbstract
 {
     /**

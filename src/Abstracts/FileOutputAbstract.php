@@ -9,8 +9,9 @@ use Exception;
  * FileOutputAbstract provides a base implementation for file output handling and serves as a
  * foundation for more specific file output classes.
  * Subclasses of FileOutputAbstract must implement the output() method to handle the actual file output logic.
+ *
+ * @package CommissionCalculator\Abstracts
  */
-
 readonly abstract class FileOutputAbstract implements OutputInterface
 {
     /**

@@ -20,6 +20,7 @@ use CommissionCalculator\Enums\SupportedCurrencies;
  * This method converts the given amount from base currency to the specified currency.
  * It first fetches the exchange rates and then performs the conversion.
  *
+ * @package CommissionCalculator\Abstracts
  */
 abstract class ExchangeRateServiceAbstract
 {

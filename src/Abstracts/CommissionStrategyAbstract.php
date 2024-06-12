@@ -5,6 +5,15 @@ namespace CommissionCalculator\Abstracts;
 use CommissionCalculator\Models\Transaction;
 use CommissionCalculator\Traits\RoundingTrait;
 
+/**
+ * Abstract class for implementing different commission strategies.
+ *
+ * The CommissionStrategyAbstract class provides a common interface
+ * for calculating the commission for a given transaction.
+ * It serves as a base for implementing specific commission strategies.
+ *
+ * @package CommissionCalculator\Abstracts
+ */
 abstract class CommissionStrategyAbstract
 {
     use RoundingTrait;

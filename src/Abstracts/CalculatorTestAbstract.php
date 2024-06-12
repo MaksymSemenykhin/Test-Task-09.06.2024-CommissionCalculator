@@ -11,6 +11,8 @@ use PHPUnit\Framework;
 /**
  * CalculatorTestAbstract is a base for CalculatorTest implementations, which are used to test the application.
  * It is Required to contain common tests functions
+ *
+ * @package CommissionCalculator\Abstracts
  */
 class CalculatorTestAbstract extends Framework\TestCase
 {
