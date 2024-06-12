@@ -2,6 +2,12 @@
 
 namespace CommissionCalculator\Enums;
 
+/**
+ * The KnownConfigs enum is used to define supported config files
+ * Used to avoid typos in the title of the config files
+ *
+ * @package CommissionCalculator\Enums
+ */
 enum KnownConfigs: string
 {
     case Local = 'config.local.php';

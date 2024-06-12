@@ -5,6 +5,8 @@ namespace CommissionCalculator\Enums;
 /**
  * The Supported Currencies enum with aim to support currencies extension
  * and ensure there is no typos in Currencies codes
+ *
+ * @package CommissionCalculator\Enums
  */
 enum SupportedCurrencies: string
 {
