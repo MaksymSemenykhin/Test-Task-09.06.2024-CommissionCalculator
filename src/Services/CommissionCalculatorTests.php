@@ -7,6 +7,7 @@ use CommissionCalculator\Enums\OutputType;
 use CommissionCalculator\Factories\OutputFactory;
 use CommissionCalculator\Factories\ServiceFactory;
 use Exception;
+
 use function PHPUnit\Framework\assertEquals;
 
 /**
