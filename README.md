@@ -1,8 +1,8 @@
 [![CI/CD Pipeline](https://github.com/MaksymSemenykhin/Test-Task-09.06.2024-CommissionCalculator/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/MaksymSemenykhin/Test-Task-09.06.2024-CommissionCalculator/actions/workflows/ci.yml)
 
 # Commission Calculator
-## Description 25h+
-
+## Description 
+This project is a test assignment created on June 9, 2024, to demonstrate skills in programming and code organization in PHP that took 25h+ time.
 This application([task](./task.md)) calculates commissions for deposit and withdrawal operations based on predefined rules. Commissions are calculated for private and business clients, taking into account currencies and weekly limits.
 
 The application supports the following operations:
