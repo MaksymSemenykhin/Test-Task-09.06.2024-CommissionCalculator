@@ -75,7 +75,7 @@ Note: the example output is calculated base on the following exchange rates: EUR
 # Requirements
 1. Third party frameworks, libraries, dependencies, tools are **not required** but **allowed**.
     1. PSR-4 is required. We require the use of `composer` for autoloading even if you do not use any external dependencies;
-    2. If your application is not based on framework skeleton, your project must use [this skeleton](https://github.com/[Censored]/skeleton-commission-task/archive/master.zip) as a bootstrap.
+    2. If your application is not based on framework skeleton, your project must use PSR-12 comparable skeleton as a bootstrap.
     3. Avoid including framework or any dependencies into your task if you don't actually use them;
 2. Your application must be maintainable:
     1. Dependencies between separate parts of your code should be clear;
