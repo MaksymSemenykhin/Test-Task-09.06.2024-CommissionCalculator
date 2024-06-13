@@ -18,7 +18,9 @@ use CommissionCalculator\Models\Transaction;
  * - `int MAX_FREE_WITHDRAWALS` — The maximum number of free withdrawals allowed per week (3).
  *
  * Methods:
- * - `__construct(ExchangeRateServiceAbstract $exchangeRateService, WithdrawalsRepositoryInterface $withdrawalsRepository)`
+ * - `__construct(
+ * ExchangeRateServiceAbstract $exchangeRateService,
+ * WithdrawalsRepositoryInterface $withdrawalsRepository)`
  *   Initializes the strategy with the exchange rate service and withdrawals repository.
  *
  * - `calculateChargeableAmount(Transaction $transaction): float`
@@ -45,9 +47,8 @@ class PrivateClientWithdrawStrategy extends CommissionStrategyAbstract
         private readonly WithdrawalsRepositoryInterface $withdrawalsRepository
     ) {
     }
-
     /**
-     * Calculates the chargeable amount for the transaction, considering the weekly free limit and number of withdrawals.
+     * Calculates the chargeable amount for the transaction, considering the weekly free limit and count of withdrawals.
      *
      * @param Transaction $transaction The transaction object.
      * @return float The chargeable amount for the transaction.

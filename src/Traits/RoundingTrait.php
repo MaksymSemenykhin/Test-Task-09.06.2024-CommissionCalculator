@@ -5,18 +5,37 @@ namespace CommissionCalculator\Traits;
 use CommissionCalculator\Enums\SupportedCurrencies;
 
 /**
- * RoundingTrait provides utility methods for rounding and formatting numerical values
- * according to the decimal places required by various currencies.
- * This trait is designed to be used in classes that need consistent rounding and formatting logic.
+ * RoundingTrait provides utility methods for rounding monetary amounts
+ * to the appropriate decimal places based on the currency.
+ *
+ * Methods:
+ * - `roundUp(float $amount, SupportedCurrencies $currency): float|int`
+ *   Rounds up the given amount to the currency's decimal places and formats it appropriately.
+ *
+ * Example:
+ * ```
+ * use CommissionCalculator\Traits\RoundingTrait;
+ *
+ * class SomeClass {
+ *     use RoundingTrait;
+ *
+ *     public function someMethod() {
+ *         $amount = 123.456;
+ *         $roundedAmount = $this->roundUp($amount, SupportedCurrencies::EUR);
+ *     }
+ * }
+ * ```
+ *
+ * @package CommissionCalculator\Traits
  */
 trait RoundingTrait
 {
     /**
-     * Rounds up the amount according to the currency's decimal places and formats it.
+     * Rounds up the given amount to the currency's decimal places and formats it appropriately.
      *
      * @param float $amount The amount to round up.
-     * @param SupportedCurrencies $currency The currency of the amount.
-     * @return float|int The rounded and formatted amount.
+     * @param SupportedCurrencies $currency The currency to determine the decimal places.
+     * @return float|int The rounded amount, formatted according to the currency's precision.
      */
     private function roundUp(float $amount, SupportedCurrencies $currency): float|int
     {
@@ -26,9 +45,9 @@ trait RoundingTrait
     }
 
     /**
-     * Gets the number of decimal places for a given currency.
+     * Returns the number of decimal places for the given currency.
      *
-     * @param SupportedCurrencies $currency The currency.
+     * @param SupportedCurrencies $currency The currency to get the decimal places for.
      * @return int The number of decimal places.
      */
     private function getDecimalPlaces(SupportedCurrencies $currency): int
