@@ -59,7 +59,7 @@ Where input.csv is a CSV file with operations. Example content of input.csv:
 ```php
 Example configuration file (config/production.php):
 return [
-    'environment' => 'production',
+    'environment' => EnvironmentType::Production,
     'api_url' => 'https://api.apilayer.com/exchangerates_data/latest',
     'api_key' => getenv('API_KEY') ?: 'your_api_key',
     'exchange_rates' => [
@@ -69,6 +69,15 @@ return [
             'JPY' => 129.53,
         ],
     ],
+    'data_source' => [
+        'type' => 'csv',
+        'path' => './tests/input.csv', // Default path
+    ],    
+    'output' => [
+        'type' => OutputType::Console,
+        'file_path' => 'output/', // Used only for 'txt' and 'xml'
+        'file_name' => 'results.txt', // Used only for 'txt' and 'xml'
+    ],    
     'TransactionRepository' => \CommissionCalculator\Repositories\TransactionRepository::class,
     'WithdrawalsRepository' => \CommissionCalculator\Repositories\WithdrawalsRepository::class,
 ];
