@@ -5,37 +5,53 @@ namespace CommissionCalculator\Factories;
 use CommissionCalculator\Enums\EnvironmentType;
 use CommissionCalculator\Services\CommissionCalculator;
 use CommissionCalculator\Services\CommissionCalculatorTests;
+use RuntimeException;
 
 /**
- * The EnvironmentFactory is responsible for creating instances of the CommissionCalculator or CommissionCalculatorTests
- * classes based on the environment configuration. The `create` method takes an array of `configPair` objects, each
- * containing a production and a testing configuration.
+ * EnvironmentFactory is responsible for creating instances of CommissionCalculator or CommissionCalculatorTests
+ * based on the provided environment configuration. This factory decides which calculator service to instantiate
+ * by checking the existence of configuration files and selecting the appropriate one for production or testing.
  *
- * The `configPair` objects are expected to contain the two configuration, main and backup, arrays for the environment.
- * Class first checks if the main configuration file exists, and if not, it falls back to the backup
- * configuration file
+ * Methods:
+ * - `create(array $configPair): CommissionCalculator|CommissionCalculatorTests`
+ *   Creates an instance of either CommissionCalculator or CommissionCalculatorTests based on the configuration.
  *
- * The `create` method returns an instance of the CommissionCalculator or CommissionCalculatorTests
- **/
+ * Example:
+ * ```
+ * $factory = new EnvironmentFactory();
+ * $calculator = $factory->create([new ConfigPair('config.php', 'config.backup.php')]);
+ * ```
+ *
+ * @package CommissionCalculator\Factories
+ */
 class EnvironmentFactory
 {
     /**
-     * Creates a CommissionCalculator or CommissionCalculatorTests based on the environment.
+     * Creates a CommissionCalculator or CommissionCalculatorTests based on the environment configuration.
      *
-     * @param $configPair
-     * @return CommissionCalculator|CommissionCalculatorTests
+     * @param array $configPair An array containing pairs of configuration filenames (main and backup).
+     * @return CommissionCalculator|CommissionCalculatorTests The appropriate calculator instance based
+     * on the environment.
+     * @throws RuntimeException If no valid configuration file is found.
      */
-    public function create($configPair): CommissionCalculator|CommissionCalculatorTests
+    public function create(array $configPair): CommissionCalculator|CommissionCalculatorTests
     {
         $c1 = $configPair[0]->value;
         $c2 = $configPair[1]->value;
-        $configFile = file_exists('config/' . $c1) ? 'config/' . $c1 : 'config/' . $c2;
+        $configFile = file_exists('config/' . $c1) ? 'config/' . $c1
+            : (file_exists('config/' . $c2) ? 'config/' . $c2 : null);
+
+        if (!$configFile) {
+            throw new \RuntimeException("No valid configuration file found: '$c1' or '$c2'");
+        }
+
         $config = require $configFile;
         $serviceFactory = new ServiceFactory($config);
 
         return match ($config['environment']) {
             EnvironmentType::Production => new CommissionCalculator($serviceFactory),
             EnvironmentType::Testing => new CommissionCalculatorTests($serviceFactory),
+            default => throw new \InvalidArgumentException("Unsupported environment type: {$config['environment']}"),
         };
     }
 }

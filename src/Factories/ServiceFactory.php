@@ -3,30 +3,42 @@
 namespace CommissionCalculator\Factories;
 
 use CommissionCalculator\Abstracts\ExchangeRateServiceAbstract;
-use CommissionCalculator\Contracts\ValidatorInterface;
 use CommissionCalculator\Contracts\WithdrawalsRepositoryInterface;
 use CommissionCalculator\Enums\SupportedCurrencies;
 use CommissionCalculator\Repositories\TransactionRepository;
 use CommissionCalculator\Services\ApiExchangeRateService;
 use CommissionCalculator\Services\FixedExchangeRateService;
 use CommissionCalculator\Validators\AttributeValidator;
-use CommissionCalculator\Validators\TransactionValidator;
 
 /**
- * ServiceFactory is a class that responsible for creating and configuring various services used by the application.
- * The ServiceFactory class has several methods for creating different services:
+ * ServiceFactory is responsible for creating and configuring various services used by the application.
+ * It provides methods to instantiate services like exchange rate services, withdrawal repositories,
+ * transaction repositories, and calculator factories based on the provided configuration.
  *
- * createExchangeRateService():
- * This method creates and configures the ExchangeRateService.
- * It determines whether to use a fixed exchange rate or an API-based exchange rate.
+ * Methods:
+ * - `createExchangeRateService(): ExchangeRateServiceAbstract`
+ *   Creates and configures the exchange rate service, either fixed or API-based.
  *
- * createWithdrawalsRepository():
- * This method creates and configures the class to handle WithdrawalsRepository defined in configuration
- * * createTransactionRepository(string $sourcePath):
- * This method creates and configures the TransactionRepository defined in configuration.
+ * - `createWithdrawalsRepository(): WithdrawalsRepositoryInterface`
+ *   Creates and configures the repository for handling withdrawals.
  *
- * createCalculatorFactory():
- * This method creates and configures the CalculatorFactory and supplies ExchangeRateService and WithdrawalsRepository
+ * - `createTransactionRepository(string $sourcePath): TransactionRepository`
+ *   Creates and configures the transaction repository.
+ *
+ * - `createCalculatorFactory(): CalculatorFactory`
+ *   Creates and configures the calculator factory.
+ *
+ * - `createTransactionValidator(): AttributeValidator`
+ *   Creates and returns an instance of the attribute validator.
+ *
+ * Example:
+ * ```
+ * $factory = new ServiceFactory($config);
+ * $exchangeRateService = $factory->createExchangeRateService();
+ * $transactionRepository = $factory->createTransactionRepository('path/to/source.csv');
+ * ```
+ *
+ * @package CommissionCalculator\Factories
  */
 class ServiceFactory
 {
@@ -40,50 +52,53 @@ class ServiceFactory
     }
 
     /**
-     * Creates and configures the ExchangeRateService.
+     * Creates and configures the exchange rate service.
      *
-     * @return ExchangeRateServiceAbstract
+     * @return ExchangeRateServiceAbstract The exchange rate service instance.
      */
     public function createExchangeRateService(): ExchangeRateServiceAbstract
     {
-        $ratesK = 'exchange_rates';
+        $ratesKey = 'exchange_rates';
         $config = $this->config;
-        if ($config[$ratesK]['use_fixed']) {
-            return new FixedExchangeRateService($config[$ratesK]['fixed_rates'], SupportedCurrencies::EUR);
+
+        if ($config[$ratesKey]['use_fixed']) {
+            return new FixedExchangeRateService($config[$ratesKey]['fixed_rates'], SupportedCurrencies::EUR);
         } else {
             return new ApiExchangeRateService(
-                $config[$ratesK]['api_url'],
-                $config[$ratesK]['api_key'],
-                $config[$ratesK]['base_currency']
+                $config[$ratesKey]['api_url'],
+                $config[$ratesKey]['api_key'],
+                $config[$ratesKey]['base_currency']
             );
         }
     }
+
     /**
-     * Creates and returns a new instance of the WithdrawalsRepositoryInterface class based on the configuration.
+     * Creates and returns a new instance of the WithdrawalsRepositoryInterface based on the configuration.
      *
-     * @return WithdrawalsRepositoryInterface The newly created instance of the WithdrawalsRepositoryInterface class.
+     * @return WithdrawalsRepositoryInterface The withdrawals repository instance.
      */
     public function createWithdrawalsRepository(): WithdrawalsRepositoryInterface
     {
         return new $this->config['WithdrawalsRepository']();
     }
+
     /**
-     * Creates and configures the TransactionRepository.
+     * Creates and configures the transaction repository.
      *
      * @param string $sourcePath Path to the data source.
-     * @return TransactionRepository
+     * @return TransactionRepository The transaction repository instance.
      */
     public function createTransactionRepository(string $sourcePath): TransactionRepository
     {
         $dataSourceAdapter = (new DataSourceAdapterFactory())->create($sourcePath);
         $validator = $this->createTransactionValidator();
-        return new $this->config['TransactionRepository']($dataSourceAdapter,$validator);
+        return new $this->config['TransactionRepository']($dataSourceAdapter, $validator);
     }
 
     /**
-     * Creates and configures the CalculatorFactory.
+     * Creates and configures the calculator factory.
      *
-     * @return CalculatorFactory
+     * @return CalculatorFactory The calculator factory instance.
      */
     public function createCalculatorFactory(): CalculatorFactory
     {
@@ -93,9 +108,9 @@ class ServiceFactory
     }
 
     /**
-     * Creates and returns a new instance of the AttributeValidator.
+     * Creates and returns an instance of the AttributeValidator.
      *
-     * @return AttributeValidator.
+     * @return AttributeValidator The attribute validator instance.
      */
     private function createTransactionValidator(): AttributeValidator
     {
