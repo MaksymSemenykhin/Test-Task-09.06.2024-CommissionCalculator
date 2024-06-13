@@ -8,20 +8,29 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
- * The ApiExchangeRateService is responsible for fetching exchange rates from an API.
+ * ApiExchangeRateService is responsible for fetching exchange rates from an external API.
+ * This service extends `ExchangeRateServiceAbstract` and uses `GuzzleHttp\Client` to make HTTP requests.
+ * It caches the fetched exchange rates to minimize API requests.
  *
- * The class has a constructor that takes in the URL of the exchange rates API and an API key for authentication.
- * It also has a property $baseCurrency which specifies the base currency to use for the exchange rates.
+ * Properties:
+ * - `string $apiUrl` — The URL of the exchange rates API.
+ * - `string $apiKey` — The API key for authentication.
+ * - `SupportedCurrencies $baseCurrency` — The base currency for the exchange rates (default: EUR).
  *
- * fetchRates()
- * This method is responsible for fetching the exchange rates from the API.
- * It sends a GET request to the specified API URL with the base currency as a query parameter.
- * The response is then parsed and the exchange rates are returned.
+ * Methods:
+ * - `__construct(string $apiUrl, string $apiKey, SupportedCurrencies $baseCurrency = SupportedCurrencies::EUR)`
+ *   Initializes the service with API URL, API key, and base currency.
  *
- * The exchange rates are cached in a static property to avoid making multiple API requests.
- * If the exchange rates have already been fetched, the cached values are returned instead of making a new API request.
+ * - `fetchRates(): array`
+ *   Fetches exchange rates from the API and caches them. If the rates are already cached, returns the cached values.
  *
- * The class uses the GuzzleHttp\Client to make the HTTP request to the API.
+ * Example:
+ * ```
+ * $apiService = new ApiExchangeRateService('https://api.exchangeratesapi.io/latest', 'your_api_key');
+ * $rates = $apiService->fetchRates();
+ * ```
+ *
+ * @package CommissionCalculator\Services
  */
 class ApiExchangeRateService extends ExchangeRateServiceAbstract
 {
@@ -32,6 +41,7 @@ class ApiExchangeRateService extends ExchangeRateServiceAbstract
      *
      * @param string $apiUrl URL for exchange rates API.
      * @param string $apiKey API key for authentication.
+     * @param SupportedCurrencies $baseCurrency Base currency for exchange rates (default: EUR).
      */
     public function __construct(
         private readonly string $apiUrl,
@@ -42,18 +52,17 @@ class ApiExchangeRateService extends ExchangeRateServiceAbstract
         $this->client = new Client();
     }
 
-
     /**
      * Fetches exchange rates from the API.
      *
-     * @return array
-     * @throws GuzzleException
-     * @throws \Exception
+     * @return array The fetched exchange rates.
+     * @throws GuzzleException If there is an error making the HTTP request.
+     * @throws \Exception If the API key is not defined or if there is an error fetching the rates.
      */
     public function fetchRates(): array
     {
         if (!$this->apiKey) {
-            throw new \Exception('Api key is nod defined');
+            throw new \Exception('API key is not defined');
         }
 
         if (!$this->rates) {
