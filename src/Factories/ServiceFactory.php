@@ -9,6 +9,7 @@ use CommissionCalculator\Enums\SupportedCurrencies;
 use CommissionCalculator\Repositories\TransactionRepository;
 use CommissionCalculator\Services\ApiExchangeRateService;
 use CommissionCalculator\Services\FixedExchangeRateService;
+use CommissionCalculator\Validators\AttributeValidator;
 use CommissionCalculator\Validators\TransactionValidator;
 
 /**
@@ -92,12 +93,12 @@ class ServiceFactory
     }
 
     /**
-     * Creates and returns a new instance of the TransactionValidator class, which implements the ValidatorInterface.
+     * Creates and returns a new instance of the AttributeValidator.
      *
-     * @return ValidatorInterface The newly created TransactionValidator instance.
+     * @return AttributeValidator.
      */
-    private function createTransactionValidator(): ValidatorInterface
+    private function createTransactionValidator(): AttributeValidator
     {
-        return new TransactionValidator();
+        return new AttributeValidator();
     }
 }

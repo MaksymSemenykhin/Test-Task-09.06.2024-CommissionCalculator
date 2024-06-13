@@ -3,11 +3,8 @@
 namespace CommissionCalculator\Repositories;
 
 use CommissionCalculator\Contracts\DataSourceAdapterInterface;
-use CommissionCalculator\Contracts\ValidatorInterface;
-use CommissionCalculator\Enums\ClientsTypes;
-use CommissionCalculator\Enums\SupportedCurrencies;
-use CommissionCalculator\Enums\SupportedOperations;
 use CommissionCalculator\Models\Transaction;
+use CommissionCalculator\Validators\AttributeValidator;
 
 /**
  * TransactionRepository is a class that is responsible for fetching and validating transactions from a data source.
@@ -19,11 +16,12 @@ readonly class TransactionRepository
      * TransactionRepository constructor.
      *
      * @param DataSourceAdapterInterface $dataSourceAdapter
-     * @param ValidatorInterface $validator
+     * @param AttributeValidator $validator
+     *
      */
     public function __construct(
         private DataSourceAdapterInterface $dataSourceAdapter,
-        private ValidatorInterface $validator
+        private AttributeValidator $validator
     ) {
     }
 
@@ -38,20 +36,13 @@ readonly class TransactionRepository
         $transactions = [];
 
         foreach ($rawData as $data) {
-            $errors = $this->validator->validate($data);
+            $transaction = new Transaction(...$data, amountInEUR: 0.0);
+            $errors = $this->validator->validate($transaction);
+
             if (!empty($errors)) {
                 throw new \InvalidArgumentException("Invalid transaction data: " . implode(', ', $errors));
             }
-
-            $transactions[] = new Transaction(
-                $data['date'],
-                (int)$data['userId'],
-                ClientsTypes::from($data['userType']),
-                SupportedOperations::from($data['transactionType']),
-                (float)$data['amount'],
-                SupportedCurrencies::from($data['currency']),
-                0.0,
-            );
+            $transactions[] = $transaction;
         }
 
         return $transactions;
