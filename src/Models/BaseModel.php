@@ -7,51 +7,18 @@ use CommissionCalculator\Enums\SupportedCurrencies;
 use CommissionCalculator\Enums\SupportedOperations;
 
 /**
- * BaseModel provides a foundation for models that require validation attributes.
- * This abstract class ensures that all properties of derived models have at least
- * one validation attribute. If any property lacks validation attributes, an
- * InvalidArgumentException will be thrown during the object's instantiation.
+ * BaseModel serves as a foundational class for models that require validation and consistent representation.
+ * This abstract class ensures that all properties of derived models adhere to specific types and conversions,
+ * including enumeration validation. It also provides a standard list of fields used in transaction models.
  *
- * Example:
- * ```
- * class Transaction extends BaseModel
- * {
- *     #[NotEmpty]
- *     public string $date;
- *
- *     #[NotEmpty, Numeric]
- *     public int $userId;
- *
- *     #[NotEmpty, EnumValue(enumClass: UserType::class)]
- *     public string $userType;
- *
- *     #[NotEmpty, EnumValue(enumClass: TransactionType::class)]
- *     public string $transactionType;
- *
- *     #[NotEmpty, Numeric]
- *     public float $amount;
- *
- *     #[NotEmpty, EnumValue(enumClass: SupportedCurrencies::class)]
- *     public string $currency;
- *
- *     public function __construct(
- *         string $date,
- *         int $userId,
- *         string $userType,
- *         string $transactionType,
- *         float $amount,
- *         string $currency
- *     ) {
- *         parent::__construct();
- *         $this->date = $date;
- *         $this->userId = $userId;
- *         $this->userType = $userType;
- *         $this->transactionType = $transactionType;
- *         $this->amount = $amount;
- *         $this->currency = $currency;
- *     }
- * }
- * ```
+ * Properties:
+ * - `public string $date` — The date of the transaction.
+ * - `public int $userId` — The user's unique identifier.
+ * - `public string|ClientsTypes $userType` — The type of user, either `private` or `business`.
+ * - `public string|SupportedOperations $transactionType` — The type of transaction, either `deposit` or `withdraw`.
+ * - `public float $amount` — The amount of the transaction.
+ * - `public string|SupportedCurrencies $currency` — The currency of the transaction.
+ * - `public float $amountInEUR` — The amount of the transaction converted to EUR.
  *
  * @package CommissionCalculator\Models
  */

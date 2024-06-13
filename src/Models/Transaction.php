@@ -12,7 +12,7 @@ use CommissionCalculator\Enums\SupportedOperations;
 /**
  * Transaction represents a financial transaction with attributes validated by custom attributes.
  * This model is used for calculating commission fees for various types of transactions
- * such as deposits and withdrawals, for private and business clients.
+ * such as deposits and withdrawals for private and business clients.
  *
  * Properties:
  * - `string $date` — The date of the transaction in `Y-m-d` format.
@@ -21,6 +21,11 @@ use CommissionCalculator\Enums\SupportedOperations;
  * - `string|SupportedOperations $transactionType` — The type of transaction, either `deposit` or `withdraw`.
  * - `float $amount` — The amount of the transaction.
  * - `string|SupportedCurrencies $currency` — The currency of the transaction.
+ *
+ * Attributes:
+ * - `#[NotEmpty]`: Ensures the property is not empty.
+ * - `#[Numeric]`: Ensures the property is numeric.
+ * - `#[EnumValue(enumClass: ...)]`: Ensures the property value matches one of the values defined in the specified enum.
  *
  * Usage:
  * Instances of this class are validated upon creation to ensure they comply with required constraints,
@@ -31,11 +36,11 @@ use CommissionCalculator\Enums\SupportedOperations;
  * $transaction = new Transaction(
  *     '2024-01-01',
  *     1,
- *     UserType::PRIVATE,
- *     'deposit',
+ *     ClientsTypes::PRIVATE,
+ *     SupportedOperations::DEPOSIT,
  *     100.0,
  *     SupportedCurrencies::EUR,
- *     0
+ *     100.0
  * );
  * ```
  *
